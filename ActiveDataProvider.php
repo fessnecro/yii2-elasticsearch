@@ -100,11 +100,13 @@ class ActiveDataProvider extends \yii\data\ActiveDataProvider
             if ($pagination !== false) {
                 $pagination->totalCount = $this->getTotalCount();
             }
-            return $results['hits']['hits'];
+
+            return array_column($results['hits']['hits'], '_source');
         }
         $this->setQueryResults([]);
         return [];
     }
+
 
     /**
      * @inheritdoc
@@ -116,7 +118,7 @@ class ActiveDataProvider extends \yii\data\ActiveDataProvider
         }
 
         $results = $this->getQueryResults();
-        return isset($results['hits']['total']) ? (int)$results['hits']['total'] : 0;
+        return isset($results['hits']['total']['value']) ? (int)$results['hits']['total']['value'] : 0;
     }
 
     /**
@@ -139,7 +141,7 @@ class ActiveDataProvider extends \yii\data\ActiveDataProvider
             /* @var $class \yii\db\ActiveRecord */
             $class = $this->query->modelClass;
             $pks = $class::primaryKey();
-            if (!is_array($pks) || count($pks) === 1) {
+            if (count($pks) === 1) {
                 foreach ($models as $model) {
                     $keys[] = $model->primaryKey;
                 }

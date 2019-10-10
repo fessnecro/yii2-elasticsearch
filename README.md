@@ -23,10 +23,8 @@ Requirements
 
 Dependent on the version of elasticsearch you are using you need a different version of this extension.
 
-- Extension version 2.0.x works with elasticsearch version 1.6.0 to 1.7.6.
-- Extension version 2.1.x requires elasticsearch 5.x.
-
-Note: to provide the work necessary a requests to the delete by query, in elasticsearch [since version 2.0](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/docs-delete-by-query.html), you should to install the plugin [delete-by-query](https://www.elastic.co/guide/en/elasticsearch/plugins/2.3/plugins-delete-by-query.html)
+- Extension version 2.0.x works with elasticsearch version 1.0 to 4.x.
+- Extension version 2.1.x requires at least elasticsearch version 5.0.
 
 Installation
 ------------
@@ -36,7 +34,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist yiisoft/yii2-elasticsearch:"~2.0.0"
+php composer.phar require --prefer-dist yiisoft/yii2-elasticsearch
 ```
 
 or add

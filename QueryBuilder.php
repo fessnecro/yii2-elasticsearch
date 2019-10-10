@@ -83,7 +83,7 @@ class QueryBuilder extends BaseObject
         }
 
         if (empty($query->query)) {
-            $parts['query'] = ["match_all" => (object)[]];
+           // $parts['query'] = ["match_all" => (object)[]];
         } else {
             $parts['query'] = $query->query;
         }
@@ -102,7 +102,7 @@ class QueryBuilder extends BaseObject
                 $parts['filter'] = ['and' => [$query->filter, $whereFilter]];
             }
         } elseif (!empty($whereFilter)) {
-            $parts['filter'] = $whereFilter;
+            $parts['query']['bool']['filter'] = $whereFilter;
         }
 
         if (!empty($query->highlight)) {
@@ -122,6 +122,7 @@ class QueryBuilder extends BaseObject
         }
 
         $sort = $this->buildOrderBy($query->orderBy);
+
         if (!empty($sort)) {
             $parts['sort'] = $sort;
         }
@@ -314,10 +315,9 @@ class QueryBuilder extends BaseObject
             return $operator === 'in' ? ['terms' => ['_uid' => []]] : []; // this condition is equal to WHERE false
         }
 
-        if (is_array($column)) {
-            if (count($column) > 1) {
-                return $this->buildCompositeInCondition($operator, $column, $values);
-            }
+        if (count($column) > 1) {
+            return $this->buildCompositeInCondition($operator, $column, $values);
+        } elseif (is_array($column)) {
             $column = reset($column);
         }
         $canBeNull = false;

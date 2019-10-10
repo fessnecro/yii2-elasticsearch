@@ -13,7 +13,6 @@ use yii\helpers\Url;
 use yii\log\Logger;
 use yii\helpers\Html;
 use yii\web\View;
-use yii\web\YiiAsset;
 
 /**
  * Debugger panel that collects and displays elasticsearch queries performed.
@@ -72,9 +71,6 @@ EOD;
      */
     public function getDetail()
     {
-        //Register YiiAsset in order to inject csrf token in ajax requests
-        YiiAsset::register(\Yii::$app->view);
-        
         $timings = $this->calculateTimings();
         ArrayHelper::multisort($timings, 3, SORT_DESC);
         $rows = [];
